@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOMOSHII - Product Details</title>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Battambang:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .product-gallery-img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .qty-input {
+            width: 80px;
+            border-radius: 50px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            padding: 10px;
+            background: var(--glass);
+            color: var(--text-main);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-glass sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/images/custom/logo.png" style="height: 45px;" alt="NOMOSHII Logo">
+                <span class="ms-2 fw-800 text-main tracker-tight d-none d-sm-block">NOMOSHII</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+                <i class="fas fa-bars text-main"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">ទំព័រដើម</a></li>
+                    <li class="nav-item"><a class="nav-link" href="category.html">ហាងទំនិញ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">អំពីយើង</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">សេវាកម្ម</a></li>
+                    <li class="nav-item ms-lg-4">
+                        <a href="cart.html" class="nav-link position-relative">
+                            <i class="fas fa-shopping-bag fs-5"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Product Detail Container -->
+    <main class="container py-5 mt-4">
+        <div id="product-detail-content">
+            <!-- Shimmer Loading -->
+            <div class="row g-5">
+                <div class="col-lg-6">
+                    <div class="shimmer rounded-4" style="height: 450px;"></div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="shimmer w-50 mb-4" style="height: 40px;"></div>
+                    <div class="shimmer w-25 mb-4" style="height: 30px;"></div>
+                    <div class="shimmer mb-4" style="height: 100px;"></div>
+                    <div class="shimmer w-75" style="height: 50px;"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer (Standard) -->
+    <footer class="py-5 mt-5 bg-white border-top">
+        <div class="container text-center">
+            <p class="text-muted small mb-0">&copy; ២០២៦ NOMOSHII Gaming Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/shop.js"></script>
+    <script>
+        // Specific Detail Page Logic
+        async function loadProductDetail() {
+            const params = new URLSearchParams(window.location.search);
+            const productId = params.get('id');
+            const contentDiv = document.getElementById('product-detail-content');
+
+            if (!productId) {
+                contentDiv.innerHTML = '<div class="alert alert-danger">ផលិតផលមិនត្រូវបានរកឃើញទេ (Product Not Found).</div>';
+                return;
+            }
+
+            try {
+                const response = await fetch('assets/data/products.json');
+                const data = await response.json();
+                const product = data.products.find(p => p.id == productId);
+
+                if (!product) {
+                    contentDiv.innerHTML = '<div class="alert alert-danger">ផលិតផលមិនត្រូវបានរកឃើញទេ (Product Not Found).</div>';
+                    return;
+                }
+
+                document.title = `NOMOSHII - ${product.name}`;
+
+                contentDiv.innerHTML = `
+                    <div class="row g-5">
+                        <div class="col-lg-6">
+                            <div class="card-gaming p-0 overflow-hidden shadow-elegant animate-float">
+                                <img src="${product.image}" class="product-gallery-img" alt="${product.name}">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-4">
+                                    <li class="breadcrumb-item"><a href="index.html" class="text-primary">ទំព័រដើម</a></li>
+                                    <li class="breadcrumb-item"><a href="category.html" class="text-primary">ហាងទំនិញ</a></li>
+                                    <li class="breadcrumb-item active">${product.name}</li>
+                                </ol>
+                            </nav>
+                            
+                            <h1 class="text-main fw-900 mb-3 fs-2">${product.name}</h1>
+                            <div class="d-flex align-items-center mb-4">
+                                <span class="fs-3 fw-800 text-primary">$${product.price ? product.price.toFixed(2) : '0.50 - 100'}</span>
+                                <span class="badge bg-success ms-3"><i class="fas fa-check-circle me-1"></i> ស្តុកមានស្រាប់</span>
+                            </div>
+                            
+                            <p class="text-muted mb-5 small-lh fs-6">
+                                ${product.description || 'យើងផ្តល់ជូននូវសេវាកម្មដ៏ល្អបំផុតសម្រាប់ហ្គេមរបស់អ្នក។ សុវត្ថិភាពខ្ពស់ និងរហ័សទាន់ចិត្តបំផុតក្នុងប្រទេសកម្ពុជា។'}
+                            </p>
+                            
+                            <div class="card-gaming p-4 mb-5 border-light border-opacity-10 bg-glass">
+                                <div class="row align-items-center g-3">
+                                    <div class="col-auto">
+                                        <label class="text-main small fw-bold mb-0">បរិមាណ:</label>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="d-flex align-items-center">
+                                            <button class="btn btn-sm btn-outline-primary rounded-circle" onclick="updateQty(-1)" style="width: 35px; height: 35px;">-</button>
+                                            <input type="number" id="purchase-qty" class="qty-input mx-3" value="1" min="1" readonly>
+                                            <button class="btn btn-sm btn-outline-primary rounded-circle" onclick="updateQty(1)" style="width: 35px; height: 35px;">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="d-grid gap-3 d-md-flex">
+                                <button class="btn btn-gaming btn-lg flex-fill py-3" onclick="handleDetailAction(${product.id}, 'add')">
+                                    <i class="fas fa-cart-plus me-2"></i> បន្ថែមក្នុងកន្ត្រក
+                                </button>
+                                <button class="btn btn-outline-gaming btn-lg flex-fill py-3" onclick="handleDetailAction(${product.id}, 'buy')">
+                                    ទិញឥឡូវនេះ
+                                </button>
+                            </div>
+                            
+                            <div class="mt-5 p-4 border-start border-primary border-4 bg-light rounded-2">
+                                <h6 class="text-main fw-bold">ព័ត៌មានបន្ថែម</h6>
+                                <p class="text-muted small mb-0">សេវាកម្មរហ័សទាន់ចិត្ត ២៤/៧។ ការបុកលុយនឹងចូលក្នុងអាខោនរបស់អ្នកភ្លាមៗក្រោយការទូទាត់។</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error loading product:', error);
+                contentDiv.innerHTML = '<div class="alert alert-danger">មានបញ្ហាក្នុងការទាញយកទិន្នន័យ (Error Loading Data).</div>';
+            }
+        }
+
+        function updateQty(change) {
+            const input = document.getElementById('purchase-qty');
+            let val = parseInt(input.value) + change;
+            if (val < 1) val = 1;
+            input.value = val;
+        }
+
+        function handleDetailAction(id, type) {
+            const qty = parseInt(document.getElementById('purchase-qty').value);
+            for(let i=0; i<qty; i++) {
+                handleAction(null, id, 'add-to-cart');
+            }
+            if(type === 'buy') window.location.href = 'cart.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProductDetail();
+        });
+    </script>
+</body>
+
+</html>

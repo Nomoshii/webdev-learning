@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOMOSHII - Checkout</title>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Battambang:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .checkout-step-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+            font-weight: 800;
+            margin: 0 auto 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .step-active .checkout-step-indicator {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px var(--primary-glow);
+        }
+        
+        .shadow-step .small {
+            color: var(--text-muted) !important;
+        }
+        
+        .step-active .small {
+            color: var(--primary) !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-glass sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/images/custom/logo.png" style="height: 45px;" alt="NOMOSHII Logo">
+                <span class="ms-2 fw-800 text-main tracker-tight d-none d-sm-block">NOMOSHII</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+                <i class="fas fa-bars text-main"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">ទំព័រដើម</a></li>
+                    <li class="nav-item"><a class="nav-link" href="category.html">ហាងទំនិញ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">អំពីយើង</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">សេវាកម្ម</a></li>
+                    <li class="nav-item ms-lg-4">
+                        <a href="cart.html" class="nav-link position-relative">
+                            <i class="fas fa-shopping-bag fs-5"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="py-5" style="background: linear-gradient(to bottom, var(--bg-light), #f1f5f9);">
+        <div class="container py-4 text-center">
+            <h1 class="hero-title mb-2">ការ <span class="text-glow-blue">ទូទាត់</span></h1>
+            <p class="text-muted">បំពេញព័ត៌មាន ដើម្បីបញ្ចប់ការបញ្ជាទិញរបស់អ្នក</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container py-5">
+        <!-- Steps Indicator -->
+        <div class="row mb-5 text-center g-0">
+            <div class="col shadow-step step-active" id="step-nav-1">
+                <div class="checkout-step-indicator">1</div>
+                <div class="small fw-bold">ព័ត៌មាន</div>
+            </div>
+            <div class="col shadow-step" id="step-nav-2">
+                <div class="checkout-step-indicator">2</div>
+                <div class="small fw-bold">ទូទាត់</div>
+            </div>
+            <div class="col shadow-step" id="step-nav-3">
+                <div class="checkout-step-indicator">3</div>
+                <div class="small fw-bold">ជោគជ័យ</div>
+            </div>
+        </div>
+
+        <div class="row g-5">
+            <div class="col-lg-8">
+                <form id="checkoutForm" novalidate>
+                    <!-- Step 1: Info -->
+                    <div id="step-1">
+                        <div class="card-gaming p-5">
+                            <h4 class="text-main fw-bold mb-4">ព័ត៌មានអតិថិជន</h4>
+                            <div class="row g-4">
+                                <div class="col-md-12">
+                                    <label class="text-muted small mb-2">ឈ្មោះពេញ</label>
+                                    <input type="text" class="form-control border-secondary text-main py-3" style="background: #fff;" required id="fullName">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="text-muted small mb-2">លេខទូរស័ព្ទ (Telegram)</label>
+                                    <input type="tel" class="form-control border-secondary text-main py-3" style="background: #fff;" required id="phone">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="text-muted small mb-2">អុីមែល</label>
+                                    <input type="email" class="form-control border-secondary text-main py-3" style="background: #fff;" required id="email">
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-gaming btn-lg w-100 mt-5" onclick="nextStep(2)">បន្តទៅកាន់ការទូទាត់</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Payment -->
+                    <div id="step-2" style="display: none;">
+                        <div class="card-gaming p-5">
+                            <h4 class="text-main fw-bold mb-4">គ្រោងការទូទាត់</h4>
+                            <div class="payment-options mb-4">
+                                <div class="card-gaming p-3 mb-3 border-primary" style="cursor: pointer; background: rgba(0,0,0,0.02);">
+                                    <div class="d-flex align-items-center">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="payment" id="aba" checked>
+                                        </div>
+                                        <div class="ms-3">
+                                            <h6 class="text-main mb-0">ABA Bank (QR Scan)</h6>
+                                            <p class="text-muted small mb-0">រហ័ស និងងាយស្រួល</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-gaming p-3 mb-3" style="cursor: pointer; background: rgba(0,0,0,0.02);">
+                                    <div class="d-flex align-items-center">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="payment" id="wing">
+                                        </div>
+                                        <div class="ms-3">
+                                            <h6 class="text-main mb-0">Wing Money</h6>
+                                            <p class="text-muted small mb-0">ទូទាត់ភ្លាមៗ</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-glass p-4 rounded-4 mb-4 text-center">
+                                <p class="text-muted small mb-2">ស្កេនដើម្បីទូទាត់</p>
+                                <img src="assets/images/custom/logo.png" style="width: 150px; opacity: 0.5;" alt="QR Code Placeholder">
+                                <p class="text-primary fw-bold mt-3">Nomoshii Gaming Co., Ltd.</p>
+                            </div>
+                            <div class="d-flex gap-3 mt-4">
+                                <button type="button" class="btn btn-outline-gaming btn-lg flex-fill" onclick="nextStep(1)">ត្រឡប់ក្រោយ</button>
+                                <button type="button" class="btn btn-gaming btn-lg flex-fill" onclick="submitOrder()">
+                                    បញ្ជាក់ការបញ្ជាទិញ <i class="fas fa-check-circle ms-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="col-lg-4">
+                <div class="card-gaming p-4 sticky-top" style="top: 100px;">
+                    <h5 class="text-main fw-bold mb-4">សេចក្តីសង្ខេប</h5>
+                    <div id="order-items">
+                        <!-- Items will be here -->
+                    </div>
+                    <hr class="border-secondary opacity-20">
+                    <div class="d-flex justify-content-between mb-4">
+                        <span class="text-main fw-bold">សរុបទាំងអស់</span>
+                        <span class="text-primary fw-800 fs-4" id="checkout-total">$0.00</span>
+                    </div>
+                    <p class="text-muted small text-center mb-0"><i class="fas fa-lock me-2"></i> ការទូទាត់ដែលមានសុវត្ថិភាពខ្ពស់</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-5" style="border-top: 1px solid var(--glass-border);">
+        <div class="container text-center">
+            <a class="navbar-brand d-flex align-items-center justify-content-center mb-4" href="#">
+                <img src="assets/images/custom/logo.png" style="height: 40px;" alt="NOMOSHII Logo">
+                <span class="ms-2 fw-800 text-main tracker-tight">NOMOSHII</span>
+            </a>
+            <p class="text-muted small mb-0">&copy; ២០២៦ NOMOSHII Gaming Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        
+        function updateSummary() {
+            const itemsContainer = document.getElementById('order-items');
+            const totalElement = document.getElementById('checkout-total');
+            const cartCountElement = document.getElementById('cart-count');
+
+            const totalCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+            if (cartCountElement) cartCountElement.innerText = totalCount;
+
+            let total = 0;
+            let itemsHtml = cartItems.map(item => {
+                const price = item.price || 0;
+                const subtotal = price * item.quantity;
+                total += subtotal;
+                return `
+                    <div class="d-flex justify-content-between mb-3 align-items-center">
+                        <div class="d-flex align-items-center">
+                            <img src="${item.image}" class="rounded-3 me-3" style="width: 40px; height: 40px; object-fit: cover;">
+                            <div>
+                                <h6 class="text-main small fw-bold mb-0">${item.name}</h6>
+                                <p class="text-muted small mb-0">x ${item.quantity}</p>
+                            </div>
+                        </div>
+                        <span class="text-main fw-bold small">$${subtotal.toFixed(2)}</span>
+                    </div>
+                `;
+            }).join('');
+
+            itemsContainer.innerHTML = itemsHtml || '<p class="text-muted small">មិនមានទំនិញ</p>';
+            totalElement.innerText = `$${total.toFixed(2)}`;
+        }
+
+        function nextStep(step) {
+            document.getElementById('step-1').style.display = (step === 1) ? 'block' : 'none';
+            document.getElementById('step-2').style.display = (step === 2) ? 'block' : 'none';
+            
+            document.getElementById('step-nav-1').classList.toggle('step-active', step === 1);
+            document.getElementById('step-nav-2').classList.toggle('step-active', step === 2);
+            document.getElementById('step-nav-3').classList.toggle('step-active', step === 3);
+
+            window.scrollTo(0, 0);
+        }
+
+        function submitOrder() {
+            // Simulated success
+            alert('ការបញ្ជាទិញទទួលបានជោគជ័យ! យើងនឹងទាក់ទងអ្នកតាមរយៈ Telegram ក្នុងពេលឆាប់ៗនេះ។');
+            localStorage.removeItem('cartItems');
+            location.href = 'index.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', updateSummary);
+    </script>
+</body>
+
+</html>

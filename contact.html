@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact NOMOSHII - 24/7 Gaming Support</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Battambang:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--glass);
+            border: 1px solid var(--primary);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin: 0 auto 20px;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-glass sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/images/custom/logo.png" style="height: 45px;" alt="NOMOSHII Logo">
+                <span class="ms-2 fw-800 text-main tracker-tight d-none d-sm-block">NOMOSHII</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+                <i class="fas fa-bars text-main"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">ទំព័រដើម</a></li>
+                    <li class="nav-item"><a class="nav-link" href="category.html">ហាងទំនិញ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">អំពីយើង</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="contact.html">សេវាកម្ម</a></li>
+                    <li class="nav-item ms-lg-4">
+                        <a href="cart.html" class="nav-link position-relative">
+                            <i class="fas fa-shopping-bag fs-5"></i>
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                id="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="py-5" style="background: linear-gradient(to bottom, var(--bg-light), #f1f5f9);">
+        <div class="container py-4 text-center">
+            <h1 class="hero-title mb-2">ទាក់ទង <span class="text-glow-blue">យើង</span></h1>
+            <p class="text-muted">ពួកយើងរង់ចាំឆ្លើយតបគ្រប់ចម្ងល់របស់អ្នក ២៤/៧</p>
+        </div>
+    </header>
+
+
+    <div class="container py-5">
+        <div class="row g-5">
+
+            <div class="col-lg-4">
+                <div class="card-gaming p-4 mb-4 text-center">
+                    <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                    <h5 class="text-white fw-bold mb-3">លេខទូរស័ព្ទ</h5>
+                    <p class="text-muted mb-1">+៨៥៥ ១២ ៣៤៥ ៦៧៨</p>
+                    <p class="text-muted mb-0">+៨៥៥ ៩៨ ៧៦៥ ៤៣២</p>
+                </div>
+                <div class="card-gaming p-4 mb-4 text-center">
+                    <div class="contact-icon"><i class="fas fa-paper-plane"></i></div>
+                    <h5 class="text-white fw-bold mb-3">តេឡេក្រាម</h5>
+                    <p class="text-muted mb-0">@NOMOSHII_Support</p>
+                    <a href="#" class="btn btn-outline-gaming btn-sm mt-3">ឆាតឥឡូវនេះ</a>
+                </div>
+                <div class="card-gaming p-4 text-center">
+                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <h5 class="text-white fw-bold mb-3">អាសយដ្ឋាន</h5>
+                    <p class="text-muted mb-0">រាជធានីភ្នំពេញ, ព្រះរាជាណាចក្រកម្ពុជា</p>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="col-lg-8">
+                <div class="card-gaming p-5">
+                    <h3 class="text-white fw-bold mb-4">ផ្ញើសារមកយើង</h3>
+                    <form id="gamingContactForm">
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <label class="text-muted small mb-2">ឈ្មោះរបស់អ្នក</label>
+                                <input type="text"
+                                    class="form-control bg-glass border-secondary text-white py-3 px-4 rounded-3"
+                                    placeholder="ឈ្មោះ">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="text-muted small mb-2">លេខទូរស័ព្ទ</label>
+                                <input type="tel"
+                                    class="form-control bg-glass border-secondary text-white py-3 px-4 rounded-3"
+                                    placeholder="០១២ ៣៤៥ ៦៧៨">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="text-muted small mb-2">អុីមែល</label>
+                            <input type="email"
+                                class="form-control bg-glass border-secondary text-white py-3 px-4 rounded-3"
+                                placeholder="example@email.com">
+                        </div>
+                        <div class="mb-4">
+                            <label class="text-muted small mb-2">សាររបស់អ្នក</label>
+                            <textarea class="form-control bg-glass border-secondary text-white py-3 px-4 rounded-3"
+                                rows="5" placeholder="សរសេរនៅទីនេះ..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-gaming btn-lg w-100">ផ្ញើសារ <i
+                                class="fas fa-paper-plane ms-2"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Section -->
+    <section class="py-5 bg-dark" style="background: #020617;">
+        <div class="container">
+            <div class="card-gaming overflow-hidden border-0">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5690.8706329487995!2d104.88457517644648!3d11.530886588667581!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310951003600014f%3A0x708a7041a3a576c2!2sWestern%20University%20-%20Steung%20Mean%20Chey!5e1!3m2!1sen!2skh!4v1776685301857!5m2!1sen!2skh"
+                    width="100%" height="450" style="border:0; filter: invert(90%) hue-rotate(180deg);"
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5" style="border-top: 1px solid var(--glass-border);">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center justify-content-center mb-4" href="#">
+                <img src="assets/images/custom/logo.png" style="height: 40px;" alt="NOMOSHII Logo">
+                <span class="ms-2 fw-800 text-main tracker-tight">NOMOSHII</span>
+            </a>
+            <p class="text-muted small mb-0">&copy; ២០២៦ NOMOSHII Gaming Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/shop.js"></script>
+</body>
+
+</html>

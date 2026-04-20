@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOMOSHII - Shopping Cart</title>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Battambang:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-glass sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/images/custom/logo.png" style="height: 45px;" alt="NOMOSHII Logo">
+                <span class="ms-2 fw-800 text-main tracker-tight d-none d-sm-block">NOMOSHII</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+                <i class="fas fa-bars text-main"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">ទំព័រដើម</a></li>
+                    <li class="nav-item"><a class="nav-link" href="category.html">ហាងទំនិញ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">អំពីយើង</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">សេវាកម្ម</a></li>
+                    <li class="nav-item ms-lg-4">
+                        <a href="cart.html" class="nav-link position-relative active">
+                            <i class="fas fa-shopping-bag fs-5"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="py-5" style="background: linear-gradient(to bottom, var(--bg-light), #f1f5f9);">
+        <div class="container py-4 text-center">
+            <h1 class="hero-title mb-2">កន្ត្រក <span class="text-glow-blue">ទំនិញ</span></h1>
+            <p class="text-muted">ពិនិត្យ និងគ្រប់គ្រងរាល់ទំនិញដែលអ្នកបានជ្រើសរើស</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container py-5">
+        <div id="cart-content">
+            <!-- Cart will be rendered here by JavaScript -->
+        </div>
+
+        <!-- Cart Action Buttons -->
+        <div class="d-flex flex-wrap gap-3 mt-5">
+            <a href="category.html" class="btn btn-outline-gaming btn-lg">
+                <i class="fas fa-arrow-left me-2"></i> បន្តការទិញ
+            </a>
+            <button class="btn btn-gaming btn-lg" id="checkout-btn" onclick="proceedToCheckout()">
+                ទូទាត់ប្រាក់ <i class="fas fa-arrow-right ms-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-5" style="border-top: 1px solid var(--glass-border);">
+        <div class="container text-center">
+            <a class="navbar-brand d-flex align-items-center justify-content-center mb-4" href="#">
+                <img src="assets/images/custom/logo.png" style="height: 40px;" alt="NOMOSHII Logo">
+                <span class="ms-2 fw-800 text-main tracker-tight">NOMOSHII</span>
+            </a>
+            <p class="text-muted small mb-0">&copy; ២០២៦ NOMOSHII Gaming Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Cart Logic (Preserved and Updated UI)
+        let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+        function renderCart() {
+            const cartContent = document.getElementById('cart-content');
+            const cartCountElement = document.getElementById('cart-count');
+
+            const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+            if (cartCountElement) cartCountElement.innerText = totalItems;
+
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+            if (cartItems.length === 0) {
+                cartContent.innerHTML = `
+                    <div class="card-gaming text-center p-5 animate-float">
+                        <i class="fas fa-shopping-bag text-muted fs-1 mb-4"></i>
+                        <h3 class="text-main fw-bold mb-3">កន្ត្រកទំនិញនៅទំនេរ</h3>
+                        <p class="text-muted mb-4">អ្នកមិនទាន់បានបន្ថែមផលិតផលណាមួយនៅឡើយទេ។</p>
+                        <a href="category.html" class="btn btn-gaming">ទៅកាន់ហាងឥឡូវនេះ</a>
+                    </div>
+                `;
+                return;
+            }
+
+            let subtotal = 0;
+            let cartRows = cartItems.map((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+
+                return `
+                    <div class="card-gaming p-3 mb-3 hover-primary">
+                        <div class="row align-items-center g-3">
+                            <div class="col-auto">
+                                <img src="${item.image}" alt="${item.name}" class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;">
+                            </div>
+                            <div class="col">
+                                <h6 class="text-main fw-bold mb-1">${item.name}</h6>
+                                <p class="price-gaming small mb-0">$${item.price.toFixed(2)}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="d-flex align-items-center p-1 rounded-pill shadow-sm" style="background: rgba(0,0,0,0.03);">
+                                    <button class="btn btn-sm btn-link text-main text-decoration-none px-3 fw-bold" onclick="updateQuantity(${index}, -1)">-</button>
+                                    <input type="number" class="form-control bg-transparent border-0 text-main text-center p-0 fw-bold" value="${item.quantity}" style="width: 40px;" readonly>
+                                    <button class="btn btn-sm btn-link text-main text-decoration-none px-3 fw-bold" onclick="updateQuantity(${index}, 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="col-auto text-end">
+                                <p class="text-main fw-bold mb-1">$${itemTotal.toFixed(2)}</p>
+                                <button class="btn btn-sm btn-link text-danger p-0" onclick="removeItem(${index})"><i class="fas fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const total = subtotal;
+
+            cartContent.innerHTML = `
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        ${cartRows}
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card-gaming p-4">
+                            <h5 class="text-main fw-bold mb-4">សរុបការបញ្ជាទិញ</h5>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">សរុបទំនិញ</span>
+                                <span class="text-main">$${subtotal.toFixed(2)}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span class="text-muted">សេវាដឹកជញ្ជូន</span>
+                                <span class="text-success">ឥតគិតថ្លៃ</span>
+                            </div>
+                            <hr class="border-secondary opacity-20">
+                            <div class="d-flex justify-content-between mb-4">
+                                <span class="text-main fw-bold">សរុបទាំងអស់</span>
+                                <span class="text-primary fw-800 fs-4">$${total.toFixed(2)}</span>
+                            </div>
+                            <button class="btn btn-gaming w-100 py-3" onclick="proceedToCheckout()">បន្តទៅកាន់ការទូទាត់</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateQuantity(index, change) {
+            cartItems[index].quantity += change;
+            if (cartItems[index].quantity < 1) cartItems[index].quantity = 1;
+            renderCart();
+        }
+
+        function removeItem(index) {
+            cartItems.splice(index, 1);
+            renderCart();
+        }
+
+        function proceedToCheckout() {
+            if (cartItems.length === 0) return;
+            location.href = 'checkout.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', renderCart);
+    </script>
+</body>
+
+</html>
